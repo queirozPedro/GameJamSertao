@@ -9,12 +9,14 @@ public class player : MonoBehaviour
     // Start is called before the first frame update
 
     [SerializeField] private float vel, impulso;
+    private float NTime;
     SpriteRenderer sr;
     Animator plyer_anim;
+    private AnimatorStateInfo animStateInfo;
     Rigidbody2D rb;
     string animacao_atual;
-    bool flip = false;
-    bool jump = false;
+    bool flip = false, jump = false, ataque_1 = false, animationFinished;
+
 
     void Start()
     {
@@ -26,9 +28,25 @@ public class player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (ataque_1){
+            animacao("Ataque_anim");
+            animStateInfo = plyer_anim.GetCurrentAnimatorStateInfo(0);
+            NTime = animStateInfo.normalizedTime;
+
+            if(NTime > 1.0f) ataque_1 = false;
+        } else{
+            Vector3 pos_passada = transform.position;
+            movimentacao();
+            animar(pos_passada);
+        }
+        
+    }
+
+    private void movimentacao(){
+
         Vector3 move = new(0,0,0);
-        Vector3 pos_passada = transform.position;
-        if(Input.GetKeyDown(KeyCode.Space)){
+        if (Input.GetKeyDown(KeyCode.Space) && !jump){
+            jump = true;
             rb.AddForce(transform.up * impulso, ForceMode2D.Impulse);
         }
         if (Input.GetKey(KeyCode.RightArrow)){
@@ -37,36 +55,39 @@ public class player : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftArrow)){
             move.x -= 1;
         }
+        if (Input.GetKeyDown(KeyCode.RightShift) && !ataque_1){
+            ataque_1 = true;
+        }
         transform.position += (Time.deltaTime * vel) * move;
-        animar(pos_passada);
     }
 
     private void animar(Vector3 pos_passada){
 
-        if (pos_passada != transform.position){
-            
-            if (transform.position.y > pos_passada.y){
-                animacao("J_anim");
-            } else if (transform.position.y < pos_passada.y){
-                animacao("Caindo_anim");
-            } else{
-                animacao("C_anim");
+        if (transform.position.x > pos_passada.x){
+            if(flip){
+                flip = false;
+                sr.flipX = false;
             }
-
-            if (transform.position.x > pos_passada.x){
-                if(flip){
-                    flip = false;
-                    sr.flipX = false;
-                }
-            } else{
-                if(!flip){
-                    flip = true;
-                    sr.flipX = true;
-                }
+        } else if (transform.position.x < pos_passada.x){
+            if(!flip){
+                flip = true;
+                sr.flipX = true;
             }
-        }else {
-            animacao("P_anim");
         }
+
+        if (rb.velocity.y > 0){
+            animacao("J_anim");
+            return;
+        } else if (rb.velocity.y < 0){
+            animacao("Caindo_anim");
+            return;
+        } else if (transform.position.x != pos_passada.x){
+            animacao("C_anim");
+            jump = false;
+            return;
+        }
+        jump = false;
+        animacao("P_anim");
     }
 
     private void animacao(string N_animacao){
