@@ -6,16 +6,14 @@ using UnityEngine.UIElements;
 
 public class player : MonoBehaviour
 {
-    // Start is called before the first frame update
 
     [SerializeField] private float vel, impulso;
-    private float NTime;
     SpriteRenderer sr;
     Animator plyer_anim;
     private AnimatorStateInfo animStateInfo;
     Rigidbody2D rb;
     string animacao_atual;
-    bool flip = false, jump = false, atacando = false, pro_ataque = false;
+    bool flip = false, jump = false, atacando = false, pro_ataque = false, espada = false;
     private short ataque = 1;
 
 
@@ -86,6 +84,7 @@ public class player : MonoBehaviour
 
     private void animar(Vector3 pos_passada){
 
+        
         if (transform.position.x > pos_passada.x){
             if(flip){
                 flip = false;
@@ -98,19 +97,36 @@ public class player : MonoBehaviour
             }
         }
 
-        if (rb.velocity.y > 0){
-            animacao("J_anim");
-            return;
-        } else if (rb.velocity.y < 0){
-            animacao("Caindo_anim");
-            return;
-        } else if (transform.position.x != pos_passada.x){
-            animacao("C_anim");
+        if(!espada){
+            if (rb.velocity.y > 0){
+                animacao("J_anim");
+                return;
+            } else if (rb.velocity.y < 0){
+                animacao("Caindo_anim");
+                return;
+            } else if (transform.position.x != pos_passada.x){
+                animacao("C_anim");
+                jump = false;
+                return;
+            }
             jump = false;
-            return;
+            animacao("P_anim");
+        } else{
+            
+            if (rb.velocity.y > 0){
+                animacao("J_anim");
+                return;
+            } else if (rb.velocity.y < 0){
+                animacao("Caindo_anim");
+                return;
+            } else if (transform.position.x != pos_passada.x){
+                animacao("C_anim");
+                jump = false;
+                return;
+            }
+            jump = false;
+            animacao("P_anim");        
         }
-        jump = false;
-        animacao("P_anim");
     }
 
     private void animacao(string N_animacao){
