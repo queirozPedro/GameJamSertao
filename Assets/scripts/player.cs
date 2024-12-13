@@ -15,7 +15,8 @@ public class player : MonoBehaviour
     private AnimatorStateInfo animStateInfo;
     Rigidbody2D rb;
     string animacao_atual;
-    bool flip = false, jump = false, ataque_1 = false, animationFinished;
+    bool flip = false, jump = false, atacando = false, pro_ataque = false;
+    private short ataque = 1;
 
 
     void Start()
@@ -28,12 +29,34 @@ public class player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (ataque_1){
-            animacao("Ataque_anim");
-            animStateInfo = plyer_anim.GetCurrentAnimatorStateInfo(0);
-            NTime = animStateInfo.normalizedTime;
+        if (atacando){
+            
+            if(ataque == 1){
+                animacao("Ataque_anim");
+            } else if (ataque == 2){
+                animacao("Ataque_2_anim");
+            } else{
+                animacao("Ataque_3_anim");
+            }
 
-            if(NTime > 1.0f) ataque_1 = false;
+            if (Input.GetKeyDown(KeyCode.KeypadEnter)){
+                pro_ataque = true;
+            }
+
+            if (fim_animacao()){
+
+                if (pro_ataque && ataque < 3)
+                {
+                    ataque++;
+                    Debug.Log(ataque);
+                    pro_ataque = false;
+                } else{
+                    atacando = false;
+                    pro_ataque = false;
+                    ataque = 1;
+                }
+            }
+            
         } else{
             Vector3 pos_passada = transform.position;
             movimentacao();
@@ -55,8 +78,8 @@ public class player : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftArrow)){
             move.x -= 1;
         }
-        if (Input.GetKeyDown(KeyCode.RightShift) && !ataque_1){
-            ataque_1 = true;
+        if (Input.GetKeyDown(KeyCode.KeypadEnter) && !atacando){
+            atacando = true;
         }
         transform.position += (Time.deltaTime * vel) * move;
     }
@@ -99,5 +122,10 @@ public class player : MonoBehaviour
         plyer_anim.Play(N_animacao);
 
         animacao_atual = N_animacao;
+    }
+
+    private bool fim_animacao() {
+        animStateInfo = plyer_anim.GetCurrentAnimatorStateInfo(0);
+        return animStateInfo.IsName(animacao_atual) && animStateInfo.normalizedTime >= 1.0f;
     }
 }
