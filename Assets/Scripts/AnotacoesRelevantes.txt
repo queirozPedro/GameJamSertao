@@ -1,0 +1,1 @@
+Limites que player não vê: 9.5 no X, 4.5 no Y
