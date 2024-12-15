@@ -49,16 +49,16 @@ public class player : MonoBehaviour
 
     private void movimentacao(){
 
-        Vector3 move = new(0,0,0);
+        Vector2 move = new(0, rb.velocity.y);
         if (Input.GetKeyDown(KeyCode.Space) && !jump){
             jump = true;
-            rb.AddForce(transform.up * impulso, ForceMode2D.Impulse);
+            move.y = impulso;
         }
         if (Input.GetKey(KeyCode.RightArrow)){
-            move.x += 1;
+            move.x = vel;
         }
         if (Input.GetKey(KeyCode.LeftArrow)){
-            move.x -= 1;
+            move.x = -vel;
         }
         if (Input.GetKeyDown(KeyCode.KeypadEnter) && !atacando){
             atacando = true;
@@ -72,8 +72,9 @@ public class player : MonoBehaviour
             }
             Debug.Log(animacao_atual);
         }
-        transform.position += (Time.deltaTime * vel) * move;
+        rb.velocity = move;
     }
+
 
     private void animar(Vector3 pos_passada){
 
@@ -87,12 +88,12 @@ public class player : MonoBehaviour
             correndo = "C_anim";
         }
         
-        if (transform.position.x > pos_passada.x){
+        if (rb.velocity.x > 0){
             if(flip){
                 flip = false;
                 sr.flipX = false;
             }
-        } else if (transform.position.x < pos_passada.x){
+        } else if (rb.velocity.x < 0){
             if(!flip){
                 flip = true;
                 sr.flipX = true;
@@ -105,7 +106,7 @@ public class player : MonoBehaviour
         } else if (rb.velocity.y < 0){
             animacao("Caindo_anim");
             return;
-        } else if (transform.position.x != pos_passada.x){
+        } else if (rb.velocity.x != 0){
             animacao(correndo);
             jump = false;
             return;
@@ -167,7 +168,6 @@ public class player : MonoBehaviour
     private bool fim_animacao() {
         animStateInfo = plyer_anim.GetCurrentAnimatorStateInfo(0);
 
-        // Verifica se a animação atual está em transição ou já começou
         if (animStateInfo.IsName(animacao_atual) && animStateInfo.normalizedTime >= 1.0f) {
             return true;
         }
