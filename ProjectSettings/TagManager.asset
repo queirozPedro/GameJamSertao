@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - SolidFloor
+  - player_ataque
   layers:
   - Default
   - TransparentFX
