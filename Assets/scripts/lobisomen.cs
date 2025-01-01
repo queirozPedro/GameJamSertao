@@ -12,6 +12,7 @@ public class lobisomen : MonoBehaviour
     [SerializeField] private float espera_parado_curto;
     private float tempo_espera, delay_ataque_distante, delay_ataque_proximo;
     private bool pacifico = true;
+    private int ataque_seguencia = 1;
     Animator lobo_anim;
     SpriteRenderer sr;
     public GameObject player;
@@ -60,21 +61,41 @@ public class lobisomen : MonoBehaviour
                 animacao("correndo_anim");
                 if(!distancia_entre_objetos(transform.position, player.transform.position, distancia_pacifico)){
                     pacifico = true;
-                }/*
-                if (distancia_entre_objetos(transform.position, player.transform.position, distancia_ataque_distante) && delay_ataque_distante <= Time.time){
+                } /*else if (distancia_entre_objetos(transform.position, player.transform.position, distancia_ataque_distante) && delay_ataque_distante <= Time.time){
                     estado_agro = 1;
-                }*/
-                if (distancia_entre_objetos(transform.position, player.transform.position, distancia_ataque_proximo) && delay_ataque_proximo <= Time.time){
+                }else */if (distancia_entre_objetos(transform.position, player.transform.position, distancia_ataque_proximo) && delay_ataque_proximo <= Time.time){
                     estado_agro = 2;
+                } else {
+                    estado_agro = 4;
                 }
                 transform.position = new(Mathf.MoveTowards(transform.position.x, player.transform.position.x, velocidade_agro * Time.deltaTime), transform.position.y, transform.position.z);
+            } else if (estado_agro == 1){
+                
+                
+
+
             } else if(estado_agro == 2){
-                animacao("ataque1_anim");
-                animacao_atual = "ataque1_anim";
+                if(ataque_seguencia == 1){
+                    animacao("ataque1_anim");
+                    animacao_atual = "ataque1_anim";
+                } else if(ataque_seguencia == 2){
+                    animacao("ataque2_anim");
+                    animacao_atual = "ataque2_anim";
+                } else if(ataque_seguencia == 3){
+                    animacao("ataque3_anim");
+                    animacao_atual = "ataque3_anim";
+                } 
+                
                 
                 if(fim_animacao()){
-                    estado_agro = 3;
-                    tempo_espera = Time.time + espera_parado_curto;
+                    if (distancia_entre_objetos(transform.position, player.transform.position, distancia_ataque_proximo * 1.5f) && ataque_seguencia < 3){
+                        ataque_seguencia++;
+                    }else {
+                        estado_agro = 3;
+                        ataque_seguencia = 1;
+                        tempo_espera = Time.time + espera_parado_curto;
+                    }
+                    
                 }
             } else if(estado_agro == 3){
                 animacao("parado_anim");

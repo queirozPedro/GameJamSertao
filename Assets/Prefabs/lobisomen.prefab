@@ -200,7 +200,7 @@ MonoBehaviour:
   velocidade_agro: 2.5
   distancia_ataque_distante: 2
   espera_ataque_distante: 2
-  distancia_ataque_proximo: 2
+  distancia_ataque_proximo: 2.5
   espera_ataque_proximo: 4
   espera_parado_curto: 3
   player: {fileID: 0}
