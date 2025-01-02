@@ -198,8 +198,9 @@ MonoBehaviour:
   distancia_pacifico: 10
   distancia_agro: 8
   velocidade_agro: 2.5
-  distancia_ataque_distante: 2
-  espera_ataque_distante: 2
+  velocidade_pacifico: 0.8
+  distancia_ataque_distante: 3.8
+  espera_ataque_distante: 4
   distancia_ataque_proximo: 2.5
   espera_ataque_proximo: 4
   espera_parado_curto: 3

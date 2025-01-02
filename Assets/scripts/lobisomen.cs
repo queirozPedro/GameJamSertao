@@ -7,15 +7,16 @@ public class lobisomen : MonoBehaviour
 {
     private int estado_pacifico = 0;
     private int estado_agro = 0;
-    [SerializeField] private float tempo_parado, tempo_andando, distancia_pacifico, distancia_agro, velocidade_agro;
+    [SerializeField] private float tempo_parado, tempo_andando, distancia_pacifico, distancia_agro, velocidade_agro, velocidade_pacifico;
     [SerializeField] private float distancia_ataque_distante, espera_ataque_distante, distancia_ataque_proximo, espera_ataque_proximo;
     [SerializeField] private float espera_parado_curto;
     private float tempo_espera, delay_ataque_distante, delay_ataque_proximo;
     private bool pacifico = true;
-    private int ataque_seguencia = 1;
+    private int ataque_seguencia = 1, sinal = 1;
     Animator lobo_anim;
     SpriteRenderer sr;
     public GameObject player;
+    private Vector3 posicao_player;
     private string animacao_atual;
     void Start()
     {
@@ -43,8 +44,10 @@ public class lobisomen : MonoBehaviour
                 if(Time.time > tempo_espera){
                     estado_pacifico = 0;
                     tempo_espera = Time.time + tempo_parado;
+                    sinal *= -1;
                 } else{
                     animacao("andando_anim");
+                    transform.position += new Vector3(Time.deltaTime * velocidade_pacifico * sinal, 0, 0);
                 }
             }
             if(distancia_entre_objetos(transform.position, player.transform.position, distancia_agro)){
@@ -61,20 +64,27 @@ public class lobisomen : MonoBehaviour
                 animacao("correndo_anim");
                 if(!distancia_entre_objetos(transform.position, player.transform.position, distancia_pacifico)){
                     pacifico = true;
-                } /*else if (distancia_entre_objetos(transform.position, player.transform.position, distancia_ataque_distante) && delay_ataque_distante <= Time.time){
+                } else if (distancia_entre_objetos(transform.position, player.transform.position, distancia_ataque_distante) && delay_ataque_distante <= Time.time){
                     estado_agro = 1;
-                }else */if (distancia_entre_objetos(transform.position, player.transform.position, distancia_ataque_proximo) && delay_ataque_proximo <= Time.time){
+                    posicao_player = player.transform.position;
+                    
+                }else if (distancia_entre_objetos(transform.position, player.transform.position, distancia_ataque_proximo) && delay_ataque_proximo <= Time.time){
                     estado_agro = 2;
-                } else {
+                } /*else {
                     estado_agro = 4;
-                }
+                }*/
                 transform.position = new(Mathf.MoveTowards(transform.position.x, player.transform.position.x, velocidade_agro * Time.deltaTime), transform.position.y, transform.position.z);
-            } else if (estado_agro == 1){
-                
-                
+            } else if(estado_agro == 1){
+                animacao("ataque_correndo_anim");
+                animacao_atual = "ataque_correndo_anim";
+                transform.position = new(Mathf.MoveTowards(transform.position.x, posicao_player.x, (velocidade_agro * 1.6f) * Time.deltaTime), transform.position.y, transform.position.z);
+                if(fim_animacao()){
+                    estado_agro = 3;
+                    tempo_espera = Time.time + espera_parado_curto;
+                    delay_ataque_distante = Time.time + espera_ataque_distante + espera_parado_curto;
+                }
 
-
-            } else if(estado_agro == 2){
+            }else if(estado_agro == 2){
                 if(ataque_seguencia == 1){
                     animacao("ataque1_anim");
                     animacao_atual = "ataque1_anim";
@@ -86,7 +96,6 @@ public class lobisomen : MonoBehaviour
                     animacao_atual = "ataque3_anim";
                 } 
                 
-                
                 if(fim_animacao()){
                     if (distancia_entre_objetos(transform.position, player.transform.position, distancia_ataque_proximo * 1.5f) && ataque_seguencia < 3){
                         ataque_seguencia++;
@@ -94,8 +103,8 @@ public class lobisomen : MonoBehaviour
                         estado_agro = 3;
                         ataque_seguencia = 1;
                         tempo_espera = Time.time + espera_parado_curto;
-                    }
-                    
+                        delay_ataque_proximo = Time.time + espera_ataque_proximo + espera_parado_curto;
+                    }  
                 }
             } else if(estado_agro == 3){
                 animacao("parado_anim");
@@ -105,6 +114,7 @@ public class lobisomen : MonoBehaviour
             }            
         }
         animar(antiga_posicao);
+        Debug.Log(estado_agro + "  " + estado_pacifico);
     }
     private void animacao(string N_animacao){
  
