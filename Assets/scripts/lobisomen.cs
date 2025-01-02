@@ -114,7 +114,6 @@ public class lobisomen : MonoBehaviour
             }            
         }
         animar(antiga_posicao);
-        Debug.Log(estado_agro + "  " + estado_pacifico);
     }
     private void animacao(string N_animacao){
  
