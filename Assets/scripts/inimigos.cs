@@ -11,6 +11,7 @@ public abstract class inimigos : MonoBehaviour
     [NonSerialized] public SpriteRenderer sr;
     [NonSerialized] public Animator Anim_controler;
     [NonSerialized] public string animacao_atual;
+    [NonSerialized] public bool direcao;
     private bool imune = false;
     /*
     Estado 0 = pacifico
@@ -41,9 +42,9 @@ public abstract class inimigos : MonoBehaviour
 
     private void animar(Vector3 antiga_posicao){
         if(transform.position.x > antiga_posicao.x){
-            sr.flipX = true;
+            sr.flipX = direcao;
         } else if(transform.position.x < antiga_posicao.x){
-            sr.flipX = false;
+            sr.flipX = !direcao;
         }
     }
 

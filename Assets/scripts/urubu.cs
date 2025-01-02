@@ -13,6 +13,7 @@ public class urubu : inimigos
         sr = GetComponent<SpriteRenderer>();
         Anim_controler = GetComponent<Animator>();
         Physics2D.IgnoreCollision(player.GetComponent<Collider2D>(), GetComponent<Collider2D>());
+        direcao = true;
     }
 
     void Update()
@@ -28,6 +29,7 @@ public class urubu : inimigos
             rb.gravityScale = 1;
         } else if (distancia_entre_objetos(transform.position, player.transform.position, distancia_ataque) && tempo_espera <= Time.time){
             estado = 2;
+            
         }
         animacao("andando_anim");
         transform.position = new(Mathf.MoveTowards(transform.position.x, player.transform.position.x, velocidade * Time.deltaTime), Mathf.MoveTowards(transform.position.y, player.transform.position.y, velocidade * Time.deltaTime), transform.position.z);
