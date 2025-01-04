@@ -11,7 +11,6 @@ public class cobra : inimigos
     {
         direcao = true;
         rb = GetComponent<Rigidbody2D>();
-        sr = GetComponent<SpriteRenderer>();
         Anim_controler = GetComponent<Animator>();
         Physics2D.IgnoreCollision(player.GetComponent<Collider2D>(), GetComponent<Collider2D>());
     }
@@ -28,6 +27,8 @@ public class cobra : inimigos
             estado = 0;
         } else if (distancia_entre_objetos(transform.position, player.transform.position, distancia_ataque) && tempo_espera <= Time.time){
             estado = 2;
+        } else if (distancia_entre_objetos(transform.position, player.transform.position, distancia_ataque)){
+            estado = 0;
         } else {
             animacao("andando_anim");
             transform.position = new(Mathf.MoveTowards(transform.position.x, player.transform.position.x, velocidade * Time.deltaTime), transform.position.y, transform.position.z);

@@ -14,7 +14,6 @@ public class lobisomen : MonoBehaviour
     private bool pacifico = true, flip = false;
     private int ataque_seguencia = 1, sinal = 1;
     Animator lobo_anim;
-    SpriteRenderer sr;
     public GameObject player;
     private Vector3 posicao_player;
     private string animacao_atual;
@@ -22,7 +21,6 @@ public class lobisomen : MonoBehaviour
     {
         tempo_espera = Time.time + tempo_parado;
         lobo_anim = GetComponent<Animator>();
-        sr = GetComponent<SpriteRenderer>();
         Physics2D.IgnoreCollision(player.GetComponent<Collider2D>(), GetComponent<Collider2D>());
     }
 

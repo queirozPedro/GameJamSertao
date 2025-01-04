@@ -10,19 +10,17 @@ public class player : MonoBehaviour
 
     [SerializeField] private float vel, impulso;
     public float vida, dano_soco, dano_espada;
-    SpriteRenderer sr;
     Animator plyer_anim;
     private AnimatorStateInfo animStateInfo;
     Rigidbody2D rb;
     private string animacao_atual;
-    private bool flip = false, jump = false, estar_no_chao, atacando = false, prox_ataque = false, deslizar = false;
+    private bool flip = false, estar_no_chao, atacando = false, prox_ataque = false, deslizar = false;
     private bool espada = false, troca_ataque_espada = false;
     private short ataque = 1;
  
  
     void Start()
     {
-        sr = GetComponent<SpriteRenderer>();
         plyer_anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
     }
@@ -49,7 +47,7 @@ public class player : MonoBehaviour
  
         Vector2 move = new(0, rb.velocity.y);
         if (Input.GetKeyDown(KeyCode.W) && estar_no_chao){
-            jump = true;
+        
             move.y = impulso;
         }
         if (Input.GetKey(KeyCode.D)){
@@ -120,11 +118,11 @@ public class player : MonoBehaviour
         } else if (rb.velocity.x != 0){
             animacao(correndo);
             estar_no_chao = true;
-            jump = false;
+        ;
             return;
         }
         estar_no_chao = true;
-        jump = false;
+    ;
         animacao(parado);
     }
  
@@ -153,7 +151,6 @@ public class player : MonoBehaviour
  
         if(ataque == 1){
             animacao(ataque_1);
-            Debug.Log(animacao_atual);
         } else if (ataque == 2){
             animacao(ataque_2);
         } else{

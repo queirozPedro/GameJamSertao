@@ -9,7 +9,6 @@ public abstract class inimigos : MonoBehaviour
     [NonSerialized] public int estado;
     public float velocidade, distancia_pacifico, distacia_agro, distancia_ataque, dano, vida, delay_ataque;
     public GameObject player;
-    [NonSerialized] public SpriteRenderer sr;
     [NonSerialized] public Animator Anim_controler;
     [NonSerialized] public string animacao_atual;
     [NonSerialized] public bool direcao;
@@ -57,10 +56,10 @@ public abstract class inimigos : MonoBehaviour
     }
 
     private void estado0_parado(){
-        animacao("parado_anim");
         if(distancia_entre_objetos(transform.position, player.transform.position, distacia_agro)){
             estado = 1;
         }
+        animacao("parado_anim");
     }
 
     public abstract void estado1_agrecivo();
@@ -70,7 +69,7 @@ public abstract class inimigos : MonoBehaviour
         animacao_atual = "hit_anim";
         if(fim_animacao()){
             imune = false;
-            estado = 1;
+            estado = 0;
         }
     }
     private void estado4_morte(){
@@ -105,17 +104,18 @@ public abstract class inimigos : MonoBehaviour
         return false;
     }
 
-    private void Oncollider2D(Collider2D collider) {
-
-        if (collider.tag == "player_ataque" && !imune){
-            AnimatorStateInfo animacao_presente = player.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0);
-            if(animacao_presente.IsName("ataque_1_anim")  || animacao_presente.IsName("ataque_2_anim") || animacao_presente.IsName("ataque_3_anim")){
-                vida -= player.GetComponent<player>().dano_soco;
-            } else{
-                vida -= player.GetComponent<player>().dano_espada;
-            }
-            estado = 3;
-            rb.AddForce(new Vector2(transform.position.x - player.transform.position.x, 0.5F).normalized * 50, ForceMode2D.Impulse);
-        }
+    private void OnTriggerEnter2D(Collider2D collision) { 
+        if (collision.CompareTag("player_ataque")) {
+            AnimatorStateInfo animacao_presente = player.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0); 
+            if (animacao_presente.IsName("ataque_1_anim") || animacao_presente.IsName("ataque_2_anim") || animacao_presente.IsName("ataque_3_anim")) { 
+                vida -= player.GetComponent<player>().dano_soco; 
+            } else { 
+                vida -= player.GetComponent<player>().dano_espada; 
+            } 
+            estado = 3; 
+            rb.AddForce(new Vector2(transform.position.x - player.transform.position.x, 0.5F).normalized * 3, ForceMode2D.Impulse); 
+        } 
     }
 }
+
+

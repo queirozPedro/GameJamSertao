@@ -11,7 +11,6 @@ public class escorpiao : inimigos
     {
         direcao = true;
         rb = GetComponent<Rigidbody2D>();
-        sr = GetComponent<SpriteRenderer>();
         Anim_controler = GetComponent<Animator>();
         Physics2D.IgnoreCollision(player.GetComponent<Collider2D>(), GetComponent<Collider2D>());
     }
@@ -28,9 +27,11 @@ public class escorpiao : inimigos
             estado = 0;
         } else if (distancia_entre_objetos(transform.position, player.transform.position, distancia_ataque) && tempo_espera <= Time.time){
             estado = 2;
-        } else {
+        } else if (distancia_entre_objetos(transform.position, player.transform.position, distancia_ataque)){
+            estado = 0;
+        } else{
             animacao("andando_anim");
-            transform.position = new(Mathf.MoveTowards(transform.position.x, ((transform.position.x - player.transform.position.x)/(transform.position.x - player.transform.position.x)) + player.transform.position.x, velocidade * Time.deltaTime), transform.position.y, transform.position.z);
+            transform.position = new(Mathf.MoveTowards(transform.position.x, player.transform.position.x, velocidade * Time.deltaTime), transform.position.y, transform.position.z);
         }
         
     }
