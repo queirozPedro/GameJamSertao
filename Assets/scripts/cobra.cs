@@ -10,6 +10,7 @@ public class cobra : inimigos
     void Start()
     {
         direcao = true;
+        rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
         Anim_controler = GetComponent<Animator>();
         Physics2D.IgnoreCollision(player.GetComponent<Collider2D>(), GetComponent<Collider2D>());

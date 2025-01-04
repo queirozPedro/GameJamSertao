@@ -12,6 +12,7 @@ public class tatu : inimigos
     void Start()
     {
         direcao = false;
+        rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
         Anim_controler = GetComponent<Animator>();
         Physics2D.IgnoreCollision(player.GetComponent<Collider2D>(), GetComponent<Collider2D>());
@@ -32,7 +33,7 @@ public class tatu : inimigos
             if(transform.position.x < player.transform.position.x) direcao_x = 1; else direcao_x = -1;
         } else {
             animacao("andando_anim");
-            transform.position = new(Mathf.MoveTowards(transform.position.x, player.transform.position.x, velocidade * Time.deltaTime), transform.position.y, transform.position.z);
+            transform.position = new(Mathf.MoveTowards(transform.position.x, ((transform.position.x - player.transform.position.x)/(transform.position.x - player.transform.position.x)) + player.transform.position.x, velocidade * Time.deltaTime), transform.position.y, transform.position.z);
         }
     }
 

@@ -11,7 +11,7 @@ public class lobisomen : MonoBehaviour
     [SerializeField] private float distancia_ataque_distante, espera_ataque_distante, distancia_ataque_proximo, espera_ataque_proximo;
     [SerializeField] private float espera_parado_curto;
     private float tempo_espera, delay_ataque_distante, delay_ataque_proximo;
-    private bool pacifico = true;
+    private bool pacifico = true, flip = false;
     private int ataque_seguencia = 1, sinal = 1;
     Animator lobo_anim;
     SpriteRenderer sr;
@@ -125,10 +125,17 @@ public class lobisomen : MonoBehaviour
     }
 
     private void animar(Vector3 antiga_posicao){
-        if(transform.position.x > antiga_posicao.x){
-            sr.flipX = false;
-        } else if(transform.position.x < antiga_posicao.x){
-            sr.flipX = true;
+
+        if (transform.position.x > antiga_posicao.x){
+            if(flip){
+                flip = false;
+                transform.localScale = new ((-1)*transform.localScale.x, transform.localScale.y, transform.localScale.z);
+            }
+        } else if (transform.position.x < antiga_posicao.x){
+            if(!flip){
+                flip = true;
+                transform.localScale = new ((-1)*transform.localScale.x, transform.localScale.y, transform.localScale.z);
+            }
         }
     }
 

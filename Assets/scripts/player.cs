@@ -9,6 +9,7 @@ public class player : MonoBehaviour
 {
 
     [SerializeField] private float vel, impulso;
+    public float vida, dano_soco, dano_espada;
     SpriteRenderer sr;
     Animator plyer_anim;
     private AnimatorStateInfo animStateInfo;
@@ -47,7 +48,7 @@ public class player : MonoBehaviour
     private void KeyboardControl(){
  
         Vector2 move = new(0, rb.velocity.y);
-        if (Input.GetKeyDown(KeyCode.W) && !jump){
+        if (Input.GetKeyDown(KeyCode.W) && estar_no_chao){
             jump = true;
             move.y = impulso;
         }
@@ -99,12 +100,12 @@ public class player : MonoBehaviour
         if (rb.velocity.x > 0){
             if(flip){
                 flip = false;
-                sr.flipX = false;
+                transform.localScale = new ((-1)*transform.localScale.x, transform.localScale.y, transform.localScale.z);
             }
         } else if (rb.velocity.x < 0){
             if(!flip){
                 flip = true;
-                sr.flipX = true;
+                transform.localScale = new ((-1)*transform.localScale.x, transform.localScale.y, transform.localScale.z);
             }
         }
  

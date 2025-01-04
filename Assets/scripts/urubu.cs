@@ -6,7 +6,6 @@ public class urubu : inimigos
 {
 
     private float tempo_espera;
-    private Rigidbody2D rb;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();

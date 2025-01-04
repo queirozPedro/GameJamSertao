@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public abstract class inimigos : MonoBehaviour
@@ -12,7 +13,8 @@ public abstract class inimigos : MonoBehaviour
     [NonSerialized] public Animator Anim_controler;
     [NonSerialized] public string animacao_atual;
     [NonSerialized] public bool direcao;
-    private bool imune = false;
+    [NonSerialized] public Rigidbody2D rb;
+    private bool imune = false, flip;
     /*
     Estado 0 = pacifico
     Estado 1 = perseguindo
@@ -41,10 +43,16 @@ public abstract class inimigos : MonoBehaviour
     }
 
     private void animar(Vector3 antiga_posicao){
-        if(transform.position.x > antiga_posicao.x){
-            sr.flipX = direcao;
-        } else if(transform.position.x < antiga_posicao.x){
-            sr.flipX = !direcao;
+        if (transform.position.x > antiga_posicao.x){
+            if(flip){
+                flip = false;
+                transform.localScale = new ((-1)*transform.localScale.x, transform.localScale.y, transform.localScale.z);
+            }
+        } else if (transform.position.x < antiga_posicao.x){
+            if(!flip){
+                flip = true;
+                transform.localScale = new ((-1)*transform.localScale.x, transform.localScale.y, transform.localScale.z);
+            }
         }
     }
 
@@ -95,5 +103,19 @@ public abstract class inimigos : MonoBehaviour
         }
  
         return false;
+    }
+
+    private void Oncollider2D(Collider2D collider) {
+
+        if (collider.tag == "player_ataque" && !imune){
+            AnimatorStateInfo animacao_presente = player.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0);
+            if(animacao_presente.IsName("ataque_1_anim")  || animacao_presente.IsName("ataque_2_anim") || animacao_presente.IsName("ataque_3_anim")){
+                vida -= player.GetComponent<player>().dano_soco;
+            } else{
+                vida -= player.GetComponent<player>().dano_espada;
+            }
+            estado = 3;
+            rb.AddForce(new Vector2(transform.position.x - player.transform.position.x, 0.5F).normalized * 50, ForceMode2D.Impulse);
+        }
     }
 }
