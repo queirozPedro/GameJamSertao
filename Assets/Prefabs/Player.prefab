@@ -101,7 +101,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 6
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -201,9 +201,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   vel: 3
   impulso: 9
-  vida: 0
-  dano_soco: 0
-  dano_espada: 0
+  vida: 4
+  dano_soco: 1
+  dano_espada: 1
 --- !u!1 &8959824080828114497
 GameObject:
   m_ObjectHideFlags: 0

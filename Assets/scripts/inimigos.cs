@@ -70,6 +70,7 @@ public abstract class inimigos : MonoBehaviour
         if(fim_animacao()){
             imune = false;
             estado = 1;
+            rb.velocity = Vector2.zero;
         }
     }
     private void estado4_morte(){
@@ -100,7 +101,6 @@ public abstract class inimigos : MonoBehaviour
         if (Anim_controler.GetCurrentAnimatorStateInfo(0).IsName(animacao_atual) && Anim_controler.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f) {
             return true;
         }
- 
         return false;
     }
 
@@ -117,8 +117,6 @@ public abstract class inimigos : MonoBehaviour
             else
             estado = 3; 
 
-            if(rb.gravityScale < 1)
-            rb.gravityScale = 1;
             rb.AddForce(new Vector2(transform.position.x - player.transform.position.x, 0.5F).normalized * 3, ForceMode2D.Impulse); 
         } 
     }
