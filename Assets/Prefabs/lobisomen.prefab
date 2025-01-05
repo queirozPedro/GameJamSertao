@@ -13,11 +13,11 @@ GameObject:
   - component: {fileID: 25008961043420734}
   m_Layer: 0
   m_Name: colisor_ataque
-  m_TagString: player_ataque
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5441158576751729064
 Transform:
   m_ObjectHideFlags: 0
@@ -41,7 +41,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3561963182927255519}
-  m_BodyType: 1
+  m_BodyType: 2
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -59,7 +59,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!61 &25008961043420734
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -89,7 +89,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.025391623, y: 0.095206}
@@ -118,7 +118,7 @@ GameObject:
   - component: {fileID: 4936037905313224506}
   m_Layer: 0
   m_Name: ataque_lobo
-  m_TagString: player_ataque
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
