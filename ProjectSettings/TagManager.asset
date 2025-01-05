@@ -43,6 +43,30 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: 8 Background
+    uniqueID: 73523449
+    locked: 0
+  - name: 7 Sun
+    uniqueID: 645200761
+    locked: 0
+  - name: 6 Clouds
+    uniqueID: 2356180109
+    locked: 0
+  - name: 5 Mountains
+    uniqueID: 2416020459
+    locked: 0
+  - name: 4 Payer
+    uniqueID: 1267173439
+    locked: 0
+  - name: 3 Layer
+    uniqueID: 1257523549
+    locked: 0
+  - name: 2 Layer
+    uniqueID: 1191183691
+    locked: 0
+  - name: 1 Layer
+    uniqueID: 2269831963
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
