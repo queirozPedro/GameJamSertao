@@ -15,7 +15,7 @@ public class player : MonoBehaviour
     Rigidbody2D rb;
     private string animacao_atual;
     private bool flip = false, estar_no_chao, atacando = false, prox_ataque = false, deslizar = false;
-    private bool espada = false, troca_ataque_espada = false;
+    private bool espada = false, troca_ataque_espada = false, imune = false, hit = false, morte = false;
     private short ataque = 1;
  
  
@@ -27,8 +27,19 @@ public class player : MonoBehaviour
  
     void Update()
     {
- 
-        if(deslizar){
+
+        if(morte){
+            rb.velocity = Vector2.zero;
+            animacao("morte_anim");
+            imune = true;
+        } else if(hit){
+            animacao("hit_anim");
+            animacao_atual = "hit_anim";
+            if(fim_animacao()){
+                hit = false;
+                imune = false;
+            }
+        }else if(deslizar){
             if (fim_animacao()){
                 deslizar = false;
             }
@@ -193,5 +204,26 @@ public class player : MonoBehaviour
         }
  
         return false;
+    }
+
+
+    private void OnTriggerEnter2D(Collider2D collision) { 
+        if (collision.CompareTag("ataque_inimigo") && !imune) { 
+            Transform parentTransform = collision.transform.parent; 
+            if (parentTransform != null) { 
+                vida -= parentTransform.GetComponent<inimigos>().dano; 
+            } 
+            if(transform.position.x > collision.transform.parent.position.x){
+                rb.AddForce(new Vector2(1, 0.3f).normalized * 40, ForceMode2D.Impulse);
+            } else{
+                rb.AddForce(new Vector2(-1, 0.3f).normalized * 40, ForceMode2D.Impulse);
+            }
+            hit = true;
+            imune = true;
+
+            if(vida <= 0){
+                morte = true;
+            }
+        }
     }
 }
