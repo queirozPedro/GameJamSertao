@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
-using UnityEditor.Animations;
+// using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -118,11 +118,9 @@ public class player : MonoBehaviour
         } else if (rb.velocity.x != 0){
             animacao(correndo);
             estar_no_chao = true;
-        ;
             return;
         }
         estar_no_chao = true;
-    ;
         animacao(parado);
     }
  
