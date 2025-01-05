@@ -9,9 +9,10 @@ public class lobisomen : MonoBehaviour
     private int estado_agro = 0;
     [SerializeField] private float tempo_parado, tempo_andando, distancia_pacifico, distancia_agro, velocidade_agro, velocidade_pacifico;
     [SerializeField] private float distancia_ataque_distante, espera_ataque_distante, distancia_ataque_proximo, espera_ataque_proximo;
-    [SerializeField] private float espera_parado_curto;
+    [SerializeField] private float espera_parado_curto, tempo_vuneravel;
+    [SerializeField] private float dano, vida_vuneravel, vida_total;
     private float tempo_espera, delay_ataque_distante, delay_ataque_proximo;
-    private bool pacifico = true, flip = false;
+    private bool pacifico = true, flip = false, vuneravel = false, imune = false;
     private int ataque_seguencia = 1, sinal = 1;
     Animator lobo_anim;
     public GameObject player;
@@ -109,7 +110,24 @@ public class lobisomen : MonoBehaviour
                 if(Time.time > tempo_espera){
                     estado_agro = 0;
                 }
-            }            
+            } else if(estado_agro == 4){
+
+                animacao("hit_anim");
+                vuneravel = true;
+                if(Time.time > tempo_espera){
+                    estado_agro = 0;
+                    vida_vuneravel = 3;
+                    vuneravel = false;
+                }
+
+            } else if(estado_agro == 5){
+                imune = true;
+                animacao("morte_anim");
+                animacao_atual = "morte_anim";
+                if(fim_animacao()){
+                    Destroy(gameObject);
+                }
+            }
         }
         animar(antiga_posicao);
     }
@@ -150,5 +168,33 @@ public class lobisomen : MonoBehaviour
         }
  
         return false;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision) { 
+        if (collision.CompareTag("player_ataque") && !imune) {
+            AnimatorStateInfo animacao_presente = player.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0); 
+            if (animacao_presente.IsName("ataque_1_anim") || animacao_presente.IsName("ataque_2_anim") || animacao_presente.IsName("ataque_3_anim")) { 
+                if(vuneravel)
+                vida_total -= player.GetComponent<player>().dano_soco;
+                else
+                vida_vuneravel -= player.GetComponent<player>().dano_soco;
+
+            } else { 
+                if(vuneravel)
+                vida_total -= player.GetComponent<player>().dano_espada;
+                else
+                vida_vuneravel -= player.GetComponent<player>().dano_espada;
+            } 
+            if(vuneravel){
+                if(vida_total <= 0){
+                    estado_agro = 5;
+                }
+            }else{
+                if(vida_vuneravel <= 0){
+                    tempo_espera = Time.time + tempo_vuneravel;
+                    estado_agro = 4;
+                }
+            }
+        } 
     }
 }

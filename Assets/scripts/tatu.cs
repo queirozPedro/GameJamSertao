@@ -40,10 +40,12 @@ public class tatu : inimigos
 
     public override void estado2_ataque()
     {
+        imune = true;
         animacao("ataque_anim");
         animacao_atual = "ataque_anim";
         transform.position = new(transform.position.x + velocidade  * 6 * Time.deltaTime * direcao_x, transform.position.y, transform.position.z);
         if(fim_animacao()){
+            imune = false;
             estado = 1;
             tempo_espera = Time.time + delay_ataque;
         }

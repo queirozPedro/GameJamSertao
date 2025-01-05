@@ -13,7 +13,7 @@ public abstract class inimigos : MonoBehaviour
     [NonSerialized] public string animacao_atual;
     [NonSerialized] public bool direcao;
     [NonSerialized] public Rigidbody2D rb;
-    private bool imune = false, flip;
+    public bool imune = false, flip;
     /*
     Estado 0 = pacifico
     Estado 1 = perseguindo
@@ -69,7 +69,7 @@ public abstract class inimigos : MonoBehaviour
         animacao_atual = "hit_anim";
         if(fim_animacao()){
             imune = false;
-            estado = 0;
+            estado = 1;
         }
     }
     private void estado4_morte(){
@@ -105,14 +105,20 @@ public abstract class inimigos : MonoBehaviour
     }
 
     private void OnTriggerEnter2D(Collider2D collision) { 
-        if (collision.CompareTag("player_ataque")) {
+        if (collision.CompareTag("player_ataque") && !imune) {
             AnimatorStateInfo animacao_presente = player.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0); 
             if (animacao_presente.IsName("ataque_1_anim") || animacao_presente.IsName("ataque_2_anim") || animacao_presente.IsName("ataque_3_anim")) { 
                 vida -= player.GetComponent<player>().dano_soco; 
             } else { 
                 vida -= player.GetComponent<player>().dano_espada; 
             } 
+            if(vida <= 0)
+            estado = 4;
+            else
             estado = 3; 
+
+            if(rb.gravityScale < 1)
+            rb.gravityScale = 1;
             rb.AddForce(new Vector2(transform.position.x - player.transform.position.x, 0.5F).normalized * 3, ForceMode2D.Impulse); 
         } 
     }
