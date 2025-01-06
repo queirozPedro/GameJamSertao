@@ -241,7 +241,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 3.16, y: -1.82, z: 0}
-  m_LocalScale: {x: 3, y: 3, z: 1}
+  m_LocalScale: {x: -0.8571428, y: 0.8571428, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4523391500828000689}
@@ -409,7 +409,7 @@ MonoBehaviour:
   tempo_andando: 3
   distancia_pacifico: 10
   distancia_agro: 8
-  velocidade_agro: 2.5
+  velocidade_agro: 3.46
   velocidade_pacifico: 0.8
   distancia_ataque_distante: 3.8
   espera_ataque_distante: 4
@@ -419,5 +419,5 @@ MonoBehaviour:
   tempo_vuneravel: 8
   vida_vuneravel: 3
   vida_total: 8
-  dano: 3
+  dano: 5
   player: {fileID: 0}
