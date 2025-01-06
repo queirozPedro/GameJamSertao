@@ -8,8 +8,8 @@ using UnityEngine.UIElements;
 public class player : MonoBehaviour
 {
 
-    [SerializeField] private float vel, impulso;
-    public float vida, dano_soco, dano_espada, knok;
+    [SerializeField] private float vel, impulso, tempo_espera;
+    public float vida, dano_soco, dano_espada, knok, tempo_imune;
     Animator plyer_anim;
     private AnimatorStateInfo animStateInfo;
     Rigidbody2D rb;
@@ -38,6 +38,7 @@ public class player : MonoBehaviour
             if(fim_animacao()){
                 hit = false;
                 imune = false;
+                tempo_espera = Time.time + tempo_imune;
             }
         }else if(deslizar){
             if (fim_animacao()){
@@ -71,7 +72,7 @@ public class player : MonoBehaviour
             atacando = true;
             move.x = 0;
         }
-        if(Input.GetKeyDown(KeyCode.I) && estar_no_chao){
+        if(Input.GetKeyDown(KeyCode.K) && estar_no_chao){
             troca_ataque_espada = true;
             if (!espada){
                 animacao("SC_espada_anim");
@@ -208,7 +209,7 @@ public class player : MonoBehaviour
 
 
     private void OnTriggerEnter2D(Collider2D collision) { 
-        if (collision.CompareTag("ataque_inimigo") && !imune) { 
+        if (collision.CompareTag("ataque_inimigo") && !imune && tempo_espera < Time.time) { 
             Transform parentTransform = collision.transform.parent; 
             if (parentTransform != null) { 
                 vida -= parentTransform.GetComponent<inimigos>().dano; 
@@ -224,7 +225,7 @@ public class player : MonoBehaviour
             if(vida <= 0){
                 morte = true;
             }
-        } else if(collision.CompareTag("ataque_lobisomen") && !imune){
+        } else if(collision.CompareTag("ataque_lobisomen") && !imune && tempo_espera < Time.time){
 
             Transform parentTransform = collision.transform.parent; 
             if (parentTransform != null) { 
