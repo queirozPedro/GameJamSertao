@@ -18,12 +18,14 @@ public class player : MonoBehaviour
     private bool espada = false, troca_ataque_espada = false, imune = false, hit = false, morte = false;
     private short ataque = 1;
     public GameObject game_controler;
+    public AudioClip musica_pricipal;
  
  
     void Start()
     {
         plyer_anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
+        game_controler.GetComponent<game_controler>().play_audio(musica_pricipal);
     }
  
     void Update()
