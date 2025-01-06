@@ -197,7 +197,7 @@ MonoBehaviour:
   velocidade: 2
   distancia_pacifico: 6
   distacia_agro: 5
-  distancia_ataque: 1.5
+  distancia_ataque: 1
   dano: 1
   vida: 3
   delay_ataque: 1.5
