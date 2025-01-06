@@ -17,6 +17,7 @@ public class player : MonoBehaviour
     private bool flip = false, estar_no_chao, atacando = false, prox_ataque = false, deslizar = false;
     private bool espada = false, troca_ataque_espada = false, imune = false, hit = false, morte = false;
     private short ataque = 1;
+    public GameObject game_controler;
  
  
     void Start()
