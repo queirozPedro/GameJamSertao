@@ -247,6 +247,8 @@ public class player : MonoBehaviour
             }
         } else if(collision.CompareTag("colisor_musica")){
             game_controler.GetComponent<game_controler>().play_audio(musica_lobo);
+        } else if(collision.CompareTag("colisor_musica_2")){
+            game_controler.GetComponent<game_controler>().play_audio(musica_pricipal);
         }
     }
 }
