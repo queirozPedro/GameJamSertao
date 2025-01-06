@@ -218,9 +218,9 @@ public class player : MonoBehaviour
                 vida -= parentTransform.GetComponent<inimigos>().dano; 
             } 
             if(transform.position.x > collision.transform.parent.position.x){
-                rb.AddForce(new Vector2(1, 0.3f).normalized * 40, ForceMode2D.Impulse);
+                rb.AddForce(new Vector2(1, 0.3f).normalized * knok, ForceMode2D.Impulse);
             } else{
-                rb.AddForce(new Vector2(-1, 0.3f).normalized * 40, ForceMode2D.Impulse);
+                rb.AddForce(new Vector2(-1, 0.3f).normalized * knok, ForceMode2D.Impulse);
             }
             hit = true;
             imune = true;
