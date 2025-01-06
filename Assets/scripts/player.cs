@@ -18,7 +18,7 @@ public class player : MonoBehaviour
     private bool espada = false, troca_ataque_espada = false, imune = false, hit = false, morte = false;
     private short ataque = 1;
     public GameObject game_controler;
-    public AudioClip musica_pricipal;
+    public AudioClip musica_pricipal, musica_lobo;
  
  
     void Start()
@@ -245,6 +245,8 @@ public class player : MonoBehaviour
             if(vida <= 0){
                 morte = true;
             }
+        } else if(collision.CompareTag("colisor_musica")){
+            game_controler.GetComponent<game_controler>().play_audio(musica_lobo);
         }
     }
 }
