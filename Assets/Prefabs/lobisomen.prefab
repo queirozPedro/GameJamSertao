@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 25008961043420734}
   m_Layer: 0
   m_Name: colisor_ataque
-  m_TagString: Untagged
+  m_TagString: ataque_lobisomen
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -92,7 +92,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.025391623, y: 0.095206}
+  m_Offset: {x: 0.025391623, y: 0.048418537}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -103,7 +103,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.18571618, y: 0.27373677}
+  m_Size: {x: 0.18571618, y: 0.18016186}
   m_EdgeRadius: 0
 --- !u!1 &6006455850536033100
 GameObject:
@@ -118,7 +118,7 @@ GameObject:
   - component: {fileID: 4936037905313224506}
   m_Layer: 0
   m_Name: ataque_lobo
-  m_TagString: Untagged
+  m_TagString: ataque_lobisomen
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -226,7 +226,7 @@ GameObject:
   - component: {fileID: 2064869807149290146}
   m_Layer: 0
   m_Name: lobisomen
-  m_TagString: Untagged
+  m_TagString: ataque_lobisomen
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -417,7 +417,7 @@ MonoBehaviour:
   espera_ataque_proximo: 4
   espera_parado_curto: 3
   tempo_vuneravel: 8
-  dano: 3
   vida_vuneravel: 3
   vida_total: 8
+  dano: 3
   player: {fileID: 0}

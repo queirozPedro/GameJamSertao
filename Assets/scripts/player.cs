@@ -9,7 +9,7 @@ public class player : MonoBehaviour
 {
 
     [SerializeField] private float vel, impulso;
-    public float vida, dano_soco, dano_espada;
+    public float vida, dano_soco, dano_espada, knok;
     Animator plyer_anim;
     private AnimatorStateInfo animStateInfo;
     Rigidbody2D rb;
@@ -217,6 +217,23 @@ public class player : MonoBehaviour
                 rb.AddForce(new Vector2(1, 0.3f).normalized * 40, ForceMode2D.Impulse);
             } else{
                 rb.AddForce(new Vector2(-1, 0.3f).normalized * 40, ForceMode2D.Impulse);
+            }
+            hit = true;
+            imune = true;
+
+            if(vida <= 0){
+                morte = true;
+            }
+        } else if(collision.CompareTag("ataque_lobisomen") && !imune){
+
+            Transform parentTransform = collision.transform.parent; 
+            if (parentTransform != null) { 
+                vida -= parentTransform.GetComponent<lobisomen>().dano; 
+            } 
+            if(transform.position.x > collision.transform.parent.position.x){
+                rb.AddForce(new Vector2(1, 0.3f).normalized * knok, ForceMode2D.Impulse);
+            } else{
+                rb.AddForce(new Vector2(-1, 0.3f).normalized * knok, ForceMode2D.Impulse);
             }
             hit = true;
             imune = true;

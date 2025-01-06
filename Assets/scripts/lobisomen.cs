@@ -10,10 +10,11 @@ public class lobisomen : MonoBehaviour
     [SerializeField] private float tempo_parado, tempo_andando, distancia_pacifico, distancia_agro, velocidade_agro, velocidade_pacifico;
     [SerializeField] private float distancia_ataque_distante, espera_ataque_distante, distancia_ataque_proximo, espera_ataque_proximo;
     [SerializeField] private float espera_parado_curto, tempo_vuneravel;
-    [SerializeField] private float dano, vida_vuneravel, vida_total;
+    [SerializeField] private float vida_vuneravel, vida_total;
     private float tempo_espera, delay_ataque_distante, delay_ataque_proximo;
     private bool pacifico = true, flip = false, vuneravel = false, imune = false;
     private int ataque_seguencia = 1, sinal = 1;
+    public float dano;
     Animator lobo_anim;
     public GameObject player;
     private Vector3 posicao_player;
